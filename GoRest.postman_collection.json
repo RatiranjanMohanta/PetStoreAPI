@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "5b50b780-969a-4a53-b255-fe1541f1ab84",
+		"name": "GoRest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35185977"
+	},
+	"item": [
+		{
+			"name": "APIs",
+			"item": [
+				{
+					"name": "GetAllUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"//Verify number of Users are above 0\r",
+									"pm.test(\"No of Users more than 0\",function(){\r",
+									"var count=pm.response.json().length; //it stores the length of response\r",
+									"console.log(count)//prints complete response\r",
+									"pm.expect(count).to.be.above(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/atom+xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer{{AuthToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gorest.co.in/public/v2/users",
+							"protocol": "https",
+							"host": [
+								"gorest",
+								"co",
+								"in"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateNewUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Verify response code to 201\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//Verify user id in response should not be null\r",
+									"pm.test(\"user id in response should not be null\", function () {\r",
+									"     pm.expect(pm.response.json().id).to.not.be.null;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//Verify user id in response should be integer\r",
+									"pm.test(\"user id in response should  be integer\", function () {\r",
+									"     pm.expect(pm.response.json().id).to.be.a('number');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//Store generate id from response and store as a environment variable called “userid”\r",
+									"var jsonObject=pm.response.json()//response is stored in the variable\r",
+									"var userID=jsonObject.id//id value from resopnse stored in variable\r",
+									"console.log(userID)//print in console\r",
+									"pm.environment.set(\"userid\", userID);//set the environment variable\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Generate a unique identifier using timestamp and a random no\r",
+									"var uniqueId=new Date().getTime()+Math.floor(Math.random()*1000);\r",
+									"\r",
+									"\r",
+									"//create the unique Email\r",
+									"var uniqueEmail=\"Rati\" + uniqueId + \"@gmail.com\";\r",
+									"\r",
+									"//set unique email in an environment variable\r",
+									"pm.environment.set(\"uniqueEmail\",uniqueEmail);\r",
+									"console.clear;\r",
+									"console.log(uniqueEmail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "e06ce583509a02657f8fd1ec1ba582cc21aa6d192608da266ce93d56430e7217",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer{{AuthToken}}"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"{{name}}\", \r\n\"gender\":\"male\", \r\n\"email\":\"{{uniqueEmail}}\",\r\n\"status\":\"active\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gorest.co.in/public/v2/users",
+							"protocol": "https",
+							"host": [
+								"gorest",
+								"co",
+								"in"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateExistingUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"        pm.response.to.have.status(200);\r",
+									"    });\r",
+									"\r",
+									"    //Verify response contains “Rati”\r",
+									"    pm.test(\"response contains Rati\", function () {\r",
+									"        const responseBody = pm.response.json();\r",
+									"        pm.expect(responseBody.name).to.include(\"Rati\");\r",
+									"    });\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//Generate a unique identifier using timestamp and a random no\r",
+									"var uniqueId=new Date().getTime()+Math.floor(Math.random()*1000);\r",
+									"\r",
+									"\r",
+									"//create the unique Email\r",
+									"var uniqueEmail=\"Rati\" + uniqueId + \"@gmail.com\";\r",
+									"\r",
+									"//set unique email in an environment variable\r",
+									"pm.environment.set(\"uniqueEmail\",uniqueEmail);\r",
+									"//console.clear;\r",
+									"console.log(uniqueEmail);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "e06ce583509a02657f8fd1ec1ba582cc21aa6d192608da266ce93d56430e7217",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Rati Postman\",\r\n \"gender\":\"male\", \r\n \"email\":\"{{uniqueEmail}}\", \r\n \"status\":\"active\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gorest.co.in/public/v2/users/{{userid}}",
+							"protocol": "https",
+							"host": [
+								"gorest",
+								"co",
+								"in"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"{{userid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteExistingUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"//Verify response contains message “No Content”\r",
+									"pm.test(\"response contains message No Content\", function () {\r",
+									"   const responseBody = pm.response.json();\r",
+									"        pm.expect(responseBody).to.include(\"No Content\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "e06ce583509a02657f8fd1ec1ba582cc21aa6d192608da266ce93d56430e7217",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer{{AuthToken}}"
+							}
+						],
+						"url": {
+							"raw": "https://gorest.co.in/public/v2/users/({{userid}}",
+							"protocol": "https",
+							"host": [
+								"gorest",
+								"co",
+								"in"
+							],
+							"path": [
+								"public",
+								"v2",
+								"users",
+								"({{userid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

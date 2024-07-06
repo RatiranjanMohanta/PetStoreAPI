@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "79b71e0c-c63c-4c4b-99c5-9170d284f9de",
+		"name": "JIRA APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35185977"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonObject=pm.response.json()//it fetch the response and store it in a variable\r",
+							"console.log(jsonObject)//prints complete response\r",
+							"var ID=jsonObject.id\r",
+							"console.log(ID)//\r",
+							"\r",
+							"pm.environment.set(\"projectid\", ID);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "selenium3bymukesh@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "ATATT3xFfGF0jqfM_cTP3jTnC8m8-w52HFxeq-RgycMGh-nGPyS-0BAdCJ12K11bzdsjghGoVjXqG4YjOdfDZOnK134CvF3P5CLbQWxay8rTJ7Lj_-0qih-7Cbspr-kHX_WkfFNSE-_JGky7ume0leBc0rXwAeJFCctnb2q0cAlErbWA-pAdkes=C1EED06F",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://restapibymukesh.atlassian.net/rest/api/latest/project/KAN",
+					"protocol": "https",
+					"host": [
+						"restapibymukesh",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"latest",
+						"project",
+						"KAN"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ensure the total Field is not 0\",function(){\r",
+							"pm.expect(pm.response.json().total).to.be.greaterThan(0)\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ATATT3xFfGF0jqfM_cTP3jTnC8m8-w52HFxeq-RgycMGh-nGPyS-0BAdCJ12K11bzdsjghGoVjXqG4YjOdfDZOnK134CvF3P5CLbQWxay8rTJ7Lj_-0qih-7Cbspr-kHX_WkfFNSE-_JGky7ume0leBc0rXwAeJFCctnb2q0cAlErbWA-pAdkes=C1EED06F",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "selenium3bymukesh@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://restapibymukesh.atlassian.net/rest/api/3/search",
+					"protocol": "https",
+					"host": [
+						"restapibymukesh",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"3",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"var jsonObject=pm.response.json()//it fetch the response and store it in a variable\r",
+							"var ID=jsonObject.id\r",
+							"console.log(ID)//\r",
+							"\r",
+							"//pm.environment.set(\"projectid\", ID);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ATATT3xFfGF0jqfM_cTP3jTnC8m8-w52HFxeq-RgycMGh-nGPyS-0BAdCJ12K11bzdsjghGoVjXqG4\nYjOdfDZOnK134CvF3P5CLbQWxay8rTJ7Lj_-0qih-7Cbspr-kHX_WkfFNSE-_JGky7ume0leBc0rXwA\neJFCctnb2q0cAlErbWA-pAdkes=C1EED06F",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "selenium3bymukesh@gmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"fields\": {\r\n \"project\": {\r\n \"id\": \"10000\"\r\n },\r\n \"summary\": \"Issue Details\",\r\n \"issuetype\": {\r\n \"id\": \"10001\"\r\n }\r\n }\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://restapibymukesh.atlassian.net/rest/api/3/issue",
+					"protocol": "https",
+					"host": [
+						"restapibymukesh",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"3",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\" + pm.environment.get(\"projectid\")+\"is deleted\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/3/issue/{{projectid}}",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"3",
+						"issue",
+						"{{projectid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "ATATT3xFfGF0jqfM_cTP3jTnC8m8-w52HFxeq-RgycMGh-nGPyS-0BAdCJ12K11bzdsjghGoVjXqG4\nYjOdfDZOnK134CvF3P5CLbQWxay8rTJ7Lj_-0qih-7Cbspr-kHX_WkfFNSE-_JGky7ume0leBc0rXwA\neJFCctnb2q0cAlErbWA-pAdkes=C1EED06F",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "selenium3bymukesh@gmail.com",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
